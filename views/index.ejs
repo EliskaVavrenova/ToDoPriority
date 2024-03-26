@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title><%= title %></title>
+</head>
+<body>
+
+  <h1><%= title %></h1>
+
+  <ul>
+  <% for (const todo of todos) { %>
+    <li>
+      <a href="/todo/<%= todo.id %>">
+        <%= todo.title %>
+      </a>
+      priority: <%= todo.priority %>
+      &nbsp;
+      <a href="/remove-todo/<%= todo.id %>">
+        odebrat
+      </a>
+      &nbsp;
+      <a href="/toggle-todo/<%= todo.id %>">
+        <%= todo.done ? 'hotovo' : 'nehotvo' %>
+      </a>
+    </li>
+  <% } %>
+  </ul>
+
+  <form method="post" action="/add-todo">
+    <input placeholder="Název todočka" name="title">
+    <button type="submit">Přidat</button>
+  </form>
+
+
+</body>
+</html>
