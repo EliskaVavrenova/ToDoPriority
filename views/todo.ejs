@@ -7,36 +7,23 @@
 </head>
 <body>
 
-  <h1><%= todo.title %></h1>
+  <div id="todoDetail">
+    <%- include('_todoDetail') %>
+  </div>
 
-  <hr>
-
-  <a href="/remove-todo/<%= todo.id %>">
-    odebrat
-  </a>
-  &nbsp;
-  <a href="/toggle-todo/<%= todo.id %>">
-    <%= todo.done ? 'hotovo' : 'nehotvo' %>
-  </a>
-
-  <hr>
-
-  <form method="post" action="/update-todo/<%= todo.id %>">
-    <h2>Upravit todočko</h2>
-    <label>Název</label>
-    <input placeholder="Název todočka" name="title" value="<%= todo.title %>">
-    <label>Priorita</label>
-    <select name="priority">
-      <option value="low" <%= todo.priority === 'low' ? 'selected' : '' %>><%= translatePriority('low') %></option>
-      <option value="normal" <%= todo.priority === 'normal' ? 'selected' : '' %>><%= translatePriority('normal') %></option>
-      <option value="high" <%= todo.priority === 'high' ? 'selected' : '' %>><%= translatePriority('high') %></option>
-    </select>
-    <button type="submit">Upravit</button>
-  </form>
-
-  <hr>
 
   <a href="/">Zpět na seznam</a>
+  <script>
+    const ws = new WebSocket('ws://localhost:3000')
 
+    ws.addEventListener('message', (ev) => {
+      const data = JSON.parse(ev.data)
+
+      if (data.type === 'todoDetail' && data.id == "<%= todo.id %>") {
+        const el = document.getElementById('todoDetail')
+        el.innerHTML = data.html
+      }
+    })
+  </script>
 </body>
 </html>
