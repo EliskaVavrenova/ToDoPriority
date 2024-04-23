@@ -1,7 +1,9 @@
 import knex from 'knex'
 import knexfile from '../knexfile.js'
 
-export const db = knex(knexfile)
+const NODE_ENV = process.env.NODE_ENV ?? "development"
+
+export const db = knex(knexfile[NODE_ENV])
 
 export const getAllTodos = async () => {
   const todos = await db('todos').select('*')
